@@ -13,6 +13,7 @@ class Solution:
     def goodNodes(self, root: TreeNode) -> int:
         
         def dfs(node, max_so_far: int):
+            breakpoint()
             if not node:
                 return 0
             
