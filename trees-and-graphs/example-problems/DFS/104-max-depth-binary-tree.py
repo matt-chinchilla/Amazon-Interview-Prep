@@ -12,11 +12,12 @@ class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
+        
         breakpoint()
         left = self.maxDepth(root.left)
         right = self.maxDepth(root.right)
         
-        return max(left, right) +1
+        return max(left, right) +1                  # left & right == 0 means it is a LEAF & increments a counter
         breakpoint()
         
 if __name__ == "__main__":
