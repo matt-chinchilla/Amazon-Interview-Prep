@@ -19,37 +19,41 @@ def build_tree_from_list(values: List[Optional[int]]) -> Optional[TreeNode]:
     while queue and i < len(values):
         node = queue.popleft()
         if i < len(values) and values[i] is not None:
-            node.left = TreeNode(values[i])
+            node.left = TreeNode(values[i])#type:ignore
             queue.append(node.left)
         i += 1
         if i < len(values) and values[i] is not None:
-            node.right = TreeNode(values[i])
+            node.right = TreeNode(values[i])#type:ignore
             queue.append(node.right)
         i += 1
     return root
 
 class Solution:
-    def rightSideView(self, root) -> list[int]:
+    def zigzagLevelOrder(self, root: Optional['TreeNode']):
         if not root:
             return []
-        breakpoint()
-        queue = deque([root])
-        ans = []
         
-        while queue:
-            current_length = len(queue)
-            ans.append(queue[-1].val)           # Append the rightmost element
-             
-            for _ in range(current_length):     # Once I have traversed the current level of the tree
-                node = queue.popleft()          # Remove the elements of the previous level
+        next_level = deque([root,])
+        nl_vals = [root.val]
+        ans = []
+        every_other = 2
+        
+        while next_level:
+            if every_other % 2 == 0:
+                ans += [list(nl_vals)]                
+            elif every_other % 2 == 1:
+                ans += [list(nl_vals[::-1])]
+            
+            curr_level = next_level
+            next_level, nl_vals = deque(), []
+            every_other += 1
+            
+            for node in curr_level:
                 if node.left:
-                    queue.append(node.left)     # Add a left child if there is one
-                if node.right:  
-                    queue.append(node.right)    # Add a right child if there is one
-
+                    next_level.append(node.left)
+                    nl_vals.append(node.left.val)
+                if node.right:
+                    next_level.append(node.right)
+                    nl_vals.append(node.right.val)
+        
         return ans
-    
-if __name__ == "__main__":
-    sol = Solution()
-    root = build_tree_from_list([1,2,3,None,5,None,4])
-    print(sol.rightSideView(root))

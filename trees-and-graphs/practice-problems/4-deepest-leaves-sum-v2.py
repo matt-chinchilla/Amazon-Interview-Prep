@@ -29,27 +29,43 @@ def build_tree_from_list(values: List[Optional[int]]) -> Optional[TreeNode]:
     return root
 
 class Solution:
-    def rightSideView(self, root) -> list[int]:
-        if not root:
-            return []
-        breakpoint()
-        queue = deque([root])
-        ans = []
+    def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
+        def dfsMax(node):
+            if not node:
+                return 0
+            
+            left = dfsMax(node.left)
+            right = dfsMax(node.right)
+            maxval = max(left,right) +1
+            return maxval
         
-        while queue:
+        if root.left == None and root.right == None:
+            return root.val
+        
+        counter=0
+        maxlen = dfsMax(root)
+        queue = deque([root])
+        ans = deque([0])               
+        breakpoint()
+        
+        while queue and (counter < maxlen):
             current_length = len(queue)
-            ans.append(queue[-1].val)           # Append the rightmost element
-             
-            for _ in range(current_length):     # Once I have traversed the current level of the tree
-                node = queue.popleft()          # Remove the elements of the previous level
+            counter += 1
+            
+            for _ in range(current_length):
+                node = queue.popleft()
+                ans.popleft()
+                
                 if node.left:
-                    queue.append(node.left)     # Add a left child if there is one
-                if node.right:  
-                    queue.append(node.right)    # Add a right child if there is one
+                    queue.append(node.left)
+                    ans.append(node.left.val)
+                if node.right:
+                    queue.append(node.right)
+                    ans.append(node.right.val)
 
-        return ans
-    
+        return sum(ans)
+
 if __name__ == "__main__":
     sol = Solution()
-    root = build_tree_from_list([1,2,3,None,5,None,4])
-    print(sol.rightSideView(root))
+    root = build_tree_from_list([2])
+    print(sol.deepestLeavesSum(root))
