@@ -6,7 +6,7 @@ class Solution:
         m, n = len(grid), len(grid[0])
         seen = set()
         directions = self.getDirections()
-        
+        breakpoint()
         # Bounds Checker
         def valid(row, col):
             return 0 <= row < m and 0 <= col <= n and grid[row][col] == 1
