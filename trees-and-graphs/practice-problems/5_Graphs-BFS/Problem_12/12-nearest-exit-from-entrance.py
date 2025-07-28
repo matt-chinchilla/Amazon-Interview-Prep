@@ -48,3 +48,5 @@ if __name__ == "__main__":
             ["+","+","+","+","+",".","+"]]
     entrance = [0,1]
     print(sol.nearestExit(maze, entrance))
+
+
