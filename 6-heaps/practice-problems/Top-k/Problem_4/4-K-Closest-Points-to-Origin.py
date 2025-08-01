@@ -4,20 +4,25 @@ import heapq
 class Solution:
     def kClosest(self, points: List[List[int]], k: int):
         def distance(points):
-            coord_distance = {}
+            breakpoint()
+            coord_distance = []
             for i in points:
                 dist = (i[0]**2 + i[1]**2)**0.5
-                coord_distance.update({tuple(i):dist}) 
+                coord_distance.append((tuple(i), dist)) 
             return coord_distance
-        
-        
-        return distance(points)
+
+        heap = []
+        distances = distance(points)
+        breakpoint()
+        for coord, val in distances:
+            heapq.heappush(heap, (-val, coord))
+            if len(heap) > k:
+                heapq.heappop(heap)
+                
+        return [shortest[1] for shortest in heap]
     
 if __name__ == "__main__":
     sol = Solution()
-    points = [[1,3],[-2,2]]
-    k = 1
+    points = [[2,2],[2,2],[3,3],[2,-2],[1,1]]
+    k = 4
     print(sol.kClosest(points, k))
-    
-# Matthew, you have a hashmap with the coordinate as point[0] and the distance as point[1]
-# Just implement a Heap & iterate the 'heappop()' operation for A MIN HEAP YOU FAG where the # times == k and return it as an ARRAY
