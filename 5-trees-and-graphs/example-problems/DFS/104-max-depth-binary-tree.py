@@ -18,7 +18,6 @@ class Solution:
         right = self.maxDepth(root.right)
         
         return max(left, right) +1                  # left & right == 0 means it is a LEAF & increments a counter
-        breakpoint()
         
 if __name__ == "__main__":
     sol = Solution()
