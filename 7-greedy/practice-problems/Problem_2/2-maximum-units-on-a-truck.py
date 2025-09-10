@@ -3,6 +3,7 @@ import heapq
 
 class Solution:
     def maximumUnits(self, boxTypes: List[List[int]], truckSize: int):
+        breakpoint()
         heap = []
         for box in boxTypes:
             heapq.heappush(heap, (-box[1], box[0]))
